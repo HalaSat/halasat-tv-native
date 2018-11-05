@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "halasat-tv-native",
-    "description": "This project is really great.",
+    "description": "Official HalaSat TV mobile version",
     "slug": "halasat-tv-native",
     "privacy": "public",
     "sdkVersion": "30.0.0",
