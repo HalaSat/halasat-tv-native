@@ -1,19 +1,26 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet } from "react-native";
-import { createBottomTabNavigator } from "react-navigation";
-import { ChannelCard } from "./components/ChannelCard";
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
+} from "react-navigation";
 
+import ChannelsList from "./components/ChannelsList";
+
+// TV content screen
 class TvScreen extends React.Component {
   render() {
     return (
       <View style={styles.screen}>
-        <ChannelCard />
+        <ChannelsList />
       </View>
     );
   }
 }
 
+// TODO: scores screen
 class ScoresScreen extends React.Component {
   render() {
     return (
@@ -24,9 +31,29 @@ class ScoresScreen extends React.Component {
   }
 }
 
-export default createBottomTabNavigator(
+// TV tabs
+const TvStack = createMaterialTopTabNavigator(
   {
-    TV: TvScreen,
+    Sport: TvScreen,
+    Movie: TvScreen,
+    Series: TvScreen,
+    Kids: TvScreen,
+  },
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: "#202020",
+      },
+      activeTintColor: "tomato",
+      inactiveTintColor: "#f2f2f2",
+    },
+  },
+);
+
+// Bottom tabs
+const RootStack = createBottomTabNavigator(
+  {
+    TV: TvStack,
     Scores: ScoresScreen,
   },
   {
@@ -61,11 +88,28 @@ export default createBottomTabNavigator(
   },
 );
 
+// Satck navigator with header
+export default createStackNavigator({
+  Root: {
+    screen: RootStack,
+    navigationOptions: {
+      title: "HalaSat TV",
+      headerStyle: {
+        backgroundColor: "#111",
+        elevation: 0,
+      },
+      headerTitleStyle: {
+        color: "#fff",
+      },
+    },
+  },
+});
+
+// styles
 const styles = StyleSheet.create({
   screen: {
     backgroundColor: "#050001",
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
   },
   text: {
