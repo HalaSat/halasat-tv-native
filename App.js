@@ -1,6 +1,6 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Button, StyleSheet } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator,
@@ -8,26 +8,23 @@ import {
 } from "react-navigation";
 
 import ChannelsList from "./components/ChannelsList";
+import PlayerScreen from "./components/PlayerScreen";
 
 // TV content screen
 class TvScreen extends React.Component {
   render() {
     return (
       <View style={styles.screen}>
-        <ChannelsList />
+        <ChannelsList navigation={this.props.navigation} />
       </View>
     );
   }
 }
 
-// TODO: scores screen
+// TODO:
 class ScoresScreen extends React.Component {
   render() {
-    return (
-      <View style={styles.screen}>
-        <Text style={styles.text}>Scores</Text>
-      </View>
-    );
+    return <View style={styles.screen} />;
   }
 }
 
@@ -103,6 +100,9 @@ export default createStackNavigator({
       },
     },
   },
+  Player: {
+    screen: PlayerScreen,
+  },
 });
 
 // styles
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
+    fontWeight: "bold",
     color: "#fff",
   },
 });

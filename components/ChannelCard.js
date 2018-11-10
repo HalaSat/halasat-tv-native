@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { LinearGradient } from "expo";
+import { LinearGradient, Font } from "expo";
 import {
   Text,
   View,
@@ -10,6 +10,18 @@ import {
 } from "react-native";
 
 export default class ChannelCard extends React.Component {
+  state = {
+    fontLoaded: false,
+  };
+  async componentDidMount() {
+    await Font.loadAsync({
+      "ubuntu-light": require("../assets/fonts/Ubuntu/Ubuntu-Light.ttf"),
+      "ubuntu-regular": require("../assets/fonts/Ubuntu/Ubuntu-Regular.ttf"),
+      "ubuntu-bold": require("../assets/fonts/Ubuntu/Ubuntu-Bold.ttf"),
+    });
+    this.setState({ fontLoaded: true });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -18,7 +30,9 @@ export default class ChannelCard extends React.Component {
             colors={["#9f240999", "#9f240911", "#0000"]}
             style={styles.gradient}
           >
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Player")}
+            >
               <Ionicons
                 name="ios-play"
                 size={64}
@@ -26,7 +40,9 @@ export default class ChannelCard extends React.Component {
                 style={styles.playIcon}
               />
             </TouchableOpacity>
-            <Text style={styles.title}>{this.props.title}</Text>
+            {this.state.fontLoaded ? (
+              <Text style={styles.title}>{this.props.title}</Text>
+            ) : null}
           </LinearGradient>
         </ImageBackground>
       </View>
@@ -61,7 +77,7 @@ const styles = StyleSheet.create({
     top: 5,
     left: 5,
     color: "#fff",
+    fontFamily: "ubuntu-regular",
     fontSize: 20,
-    fontWeight: "400",
   },
 });
