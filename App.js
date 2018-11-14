@@ -1,6 +1,6 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { View, Button, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator,
@@ -11,11 +11,69 @@ import ChannelsList from "./components/ChannelsList";
 import PlayerScreen from "./components/PlayerScreen";
 
 // TV content screen
-class TvScreen extends React.Component {
+class AllScreen extends React.Component {
   render() {
     return (
       <View style={styles.screen}>
         <ChannelsList navigation={this.props.navigation} />
+      </View>
+    );
+  }
+}
+
+class EntertainmentScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.screen}>
+        <ChannelsList navigation={this.props.navigation} cat="Entertainment" />
+      </View>
+    );
+  }
+}
+class SportsScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.screen}>
+        <ChannelsList navigation={this.props.navigation} cat="Sports" />
+      </View>
+    );
+  }
+}
+class MoviesScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.screen}>
+        <ChannelsList navigation={this.props.navigation} cat="Movies" />
+      </View>
+    );
+  }
+}
+
+class SeriesScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.screen}>
+        <ChannelsList navigation={this.props.navigation} cat="Series" />
+      </View>
+    );
+  }
+}
+
+class MusicScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.screen}>
+        <ChannelsList navigation={this.props.navigation} cat="Music" />
+      </View>
+    );
+  }
+}
+
+class KidsScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.screen}>
+        <ChannelsList navigation={this.props.navigation} cat="Kids" />
       </View>
     );
   }
@@ -31,10 +89,13 @@ class ScoresScreen extends React.Component {
 // TV tabs
 const TvStack = createMaterialTopTabNavigator(
   {
-    Sport: TvScreen,
-    Movie: TvScreen,
-    Series: TvScreen,
-    Kids: TvScreen,
+    All: AllScreen,
+    Entertainment: EntertainmentScreen,
+    Sports: SportsScreen,
+    Movies: MoviesScreen,
+    // Series: SeriesScreen,
+    Music: MusicScreen,
+    Kids: KidsScreen,
   },
   {
     tabBarOptions: {
@@ -43,6 +104,7 @@ const TvStack = createMaterialTopTabNavigator(
       },
       activeTintColor: "tomato",
       inactiveTintColor: "#f2f2f2",
+      scrollEnabled: true,
     },
   },
 );
@@ -102,6 +164,9 @@ export default createStackNavigator({
   },
   Player: {
     screen: PlayerScreen,
+    navigationOptions: {
+      header: null,
+    },
   },
 });
 
@@ -110,7 +175,6 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: "#050001",
     flex: 1,
-    alignItems: "center",
   },
   text: {
     fontWeight: "bold",
