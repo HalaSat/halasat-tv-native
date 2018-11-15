@@ -35,23 +35,28 @@ export default class ChannelsList extends React.Component {
     //   .then(channels => {
     //     this.setState({ dataSource: ds.cloneWithRows(channels) });
     //   });
+    this._refreshItems();
+  }
+  _refreshItems = () => {
     let items = this.props.cat
       ? channels.filter(item => item.cat == this.props.cat)
       : channels;
-    this.setState({ dataSource: items });
-  }
-
+    this.setState({ dataSource: null }, () =>
+      this.setState({ dataSource: items }),
+    );
+  };
   render() {
     const numColumns = Math.floor(this.width / 74);
-    return this.state.dataSource ? (
+    return (
       <FlatList
         data={this.state.dataSource}
         keyExtractor={this._keyExtractor}
         renderItem={this._renderItem}
         numColumns={numColumns}
+        refreshing={this.state.dataSource ? false : true}
+        onRefresh={this._refreshItems}
+        contentContainerStyle={{ backgroundColor: "rgb(34, 34, 34)" }}
       />
-    ) : (
-      <Spinner />
     );
   }
 }

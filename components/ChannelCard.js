@@ -4,18 +4,6 @@ import React from "react";
 import { ImageBackground, TouchableOpacity } from "react-native";
 
 export default class ChannelCard extends React.Component {
-  // state = {
-  //   fontLoaded: false,
-  // };
-  // async componentDidMount() {
-  //   await Font.loadAsync({
-  //     "ubuntu-light": require("../assets/fonts/Ubuntu/Ubuntu-Light.ttf"),
-  //     "ubuntu-regular": require("../assets/fonts/Ubuntu/Ubuntu-Regular.ttf"),
-  //     "ubuntu-bold": require("../assets/fonts/Ubuntu/Ubuntu-Bold.ttf"),
-  //   });
-  //   this.setState({ fontLoaded: true });
-  // }
-
   render() {
     return (
       <TouchableOpacity
@@ -39,7 +27,6 @@ export default class ChannelCard extends React.Component {
           style={{
             width: 40,
             height: 40,
-            shadowColor: "#000",
           }}
           source={this.props.img}
         />

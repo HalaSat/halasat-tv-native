@@ -1,6 +1,6 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { View, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator,
@@ -82,7 +82,11 @@ class KidsScreen extends React.Component {
 // TODO:
 class ScoresScreen extends React.Component {
   render() {
-    return <View style={styles.screen} />;
+    return (
+      <View style={styles.scoresScreen}>
+        <Text style={styles.commingSoon}>Comming soon...</Text>
+      </View>
+    );
   }
 }
 
@@ -173,11 +177,21 @@ export default createStackNavigator({
 // styles
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: "#050001",
+    backgroundColor: "rgb(34, 34, 34)",
     flex: 1,
+  },
+  scoresScreen: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgb(34, 34, 34)",
   },
   text: {
     fontWeight: "bold",
     color: "#fff",
+  },
+  commingSoon: {
+    color: "tomato",
+    fontSize: 22,
   },
 });
