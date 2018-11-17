@@ -1,8 +1,8 @@
 import React from "react";
-import { FlatList, Dimensions } from "react-native";
-import Spinner from "./Spinner";
+import { FlatList, Dimensions, Text } from "react-native";
+
 import ChannelCard from "./ChannelCard";
-import channels from "../assets/channels.json";
+import channels from "../../assets/channels.json";
 
 export default class ChannelsList extends React.Component {
   constructor() {
@@ -37,14 +37,21 @@ export default class ChannelsList extends React.Component {
     //   });
     this._refreshItems();
   }
+  componentDidUpdate() {
+    //this._refreshItems();
+  }
   _refreshItems = () => {
-    let items = this.props.cat
-      ? channels.filter(item => item.cat == this.props.cat)
-      : channels;
-    this.setState({ dataSource: null }, () =>
-      this.setState({ dataSource: items }),
-    );
+    const channel = this.props.navigation.getParam("channel");
+    const cat = channel ? channel.cat : this.props.cat;
+    let items = cat
+      ? channels.filter(item => item.cat == cat)
+      : //.filter(item => item.id !== channel.id)
+        channels;
+    // this.setState({ dataSource: null }, () =>
+    this.setState({ dataSource: items });
+    // );
   };
+
   render() {
     const numColumns = Math.floor(this.width / 74);
     return (
@@ -56,6 +63,17 @@ export default class ChannelsList extends React.Component {
         refreshing={this.state.dataSource ? false : true}
         onRefresh={this._refreshItems}
         contentContainerStyle={{ backgroundColor: "rgb(34, 34, 34)" }}
+        ListHeaderComponent={
+          <Text
+            style={{
+              color: "#ddd",
+              margin: 10,
+              fontSize: 15,
+            }}
+          >
+            {this.props.title || ""}
+          </Text>
+        }
       />
     );
   }

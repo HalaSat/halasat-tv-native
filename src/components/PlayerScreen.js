@@ -30,14 +30,25 @@ export default class PlayerScreen extends React.Component {
   componentDidMount() {
     ScreenOrientation.allow(ScreenOrientation.Orientation.ALL);
   }
+  _hide;
+  _toggleControls = () => {
+    this.setState({ isHidden: !this.state.isHidden }, () => {
+      if (this._hide) clearTimeout(this._hide);
+      if (!this.state.isHidden)
+        this._hide = setTimeout(() => this.setState({ isHidden: true }), 5000);
+    });
+  };
+  _close = () => this.props.navigation.navigate("Root");
   _togglePlaying = () => this.setState({ isPlaying: !this.state.isPlaying });
   _toggleMute = () => this.setState({ isMuted: !this.state.isMuted });
   _toggleFullScreen = () => this._video.presentFullscreenPlayer();
-  _toggleControls = () => this.setState({ isHidden: !this.state.isHidden });
   _toggleSpinner = spin => this.setState({ spin });
+
   componentWillUnmount() {
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+    clearTimeout(this._hide);
   }
+
   render() {
     const { navigation } = this.props;
     const channel = navigation.getParam("channel");
@@ -65,25 +76,40 @@ export default class PlayerScreen extends React.Component {
             />
           </TouchableWithoutFeedback>
           {this.state.isHidden ? null : (
-            <View style={styles.playerControls}>
-              <TouchableOpacity onPress={this._togglePlaying}>
-                <Ionicons
-                  name={isPlaying ? "md-pause" : "md-play"}
-                  color="#fff"
-                  size={30}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this._toggleMute}>
-                <Ionicons
-                  name={isMuted ? "md-volume-off" : "md-volume-up"}
-                  color="#fff"
-                  size={30}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this._toggleFullScreen}>
-                <Ionicons name="md-expand" color="#fff" size={30} />
-              </TouchableOpacity>
-            </View>
+            <TouchableWithoutFeedback onPress={this._toggleControls}>
+              <View style={styles.playerControls}>
+                <TouchableOpacity onPress={this._close} style={styles.close}>
+                  <Ionicons name="md-close-circle" color="#fff" size={30} />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={this._togglePlaying}
+                  style={styles.play}
+                >
+                  <Ionicons
+                    name={isPlaying ? "md-pause" : "md-play"}
+                    color="#fff"
+                    size={30}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this._toggleMute}
+                  style={styles.volume}
+                >
+                  <Ionicons
+                    name={isMuted ? "md-volume-off" : "md-volume-up"}
+                    color="#fff"
+                    size={30}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this._toggleFullScreen}
+                  style={styles.expand}
+                >
+                  <Ionicons name="md-expand" color="#fff" size={30} />
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
           )}
         </View>
         <View style={styles.detailsContainer}>
@@ -102,9 +128,14 @@ export default class PlayerScreen extends React.Component {
               style={styles.currentChannelImage}
             />
           </View>
-          <Text style={styles.currentChannelTitle}>{channel.title}</Text>
+          <View>
+            <Text style={styles.currentChannelTitle}>{channel.title}</Text>
+            <Text style={styles.currentChannelCategory}>{channel.cat}</Text>
+          </View>
         </View>
-        <ChannelsList navigation={navigation} />
+        <View style={{ flex: 1, backgroundColor: "rgb(34, 34, 34)" }}>
+          <ChannelsList navigation={navigation} title="Related channels" />
+        </View>
       </View>
     );
   }
@@ -123,8 +154,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "50%",
     left: "50%",
-    transform: [{ translateX: -20 }, { translateY: -20 }],
-
+    transform: [{ translateX: -23 }, { translateY: -19 }],
     zIndex: 10,
   },
   playerControls: {
@@ -132,9 +162,31 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(10, 10, 10, .3)",
     position: "absolute",
     width: "100%",
+    height: "100%",
     justifyContent: "space-around",
-    bottom: 0,
+    top: 0,
     left: 0,
+  },
+  close: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+  },
+  play: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: -15 }, { translateY: -15 }],
+  },
+  expand: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+  },
+  volume: {
+    position: "absolute",
+    top: 10,
+    right: 10,
   },
   detailsContainer: {
     flexDirection: "row",
@@ -149,5 +201,10 @@ const styles = StyleSheet.create({
   },
   currentChannelTitle: {
     color: "#fff",
+    fontSize: 15,
+  },
+  currentChannelCategory: {
+    color: "#ccc",
+    fontSize: 13,
   },
 });
