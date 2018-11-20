@@ -1,7 +1,7 @@
 // import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 // import { Font } from "expo";
-import { ImageBackground, TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 
 export default class ChannelCard extends React.Component {
   render() {
@@ -23,7 +23,7 @@ export default class ChannelCard extends React.Component {
           overflow: "hidden",
         }}
       >
-        <ImageBackground
+        <Image
           style={{
             width: 40,
             height: 40,

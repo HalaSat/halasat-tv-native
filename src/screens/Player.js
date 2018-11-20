@@ -13,8 +13,8 @@ import {
 import { Video, ScreenOrientation } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 
-import ChannelsList from "./ChannelsList";
-import Spinner from "./Spinner";
+import ChannelsList from "../components/ChannelsList";
+import Spinner from "../components/Spinner";
 
 export default class PlayerScreen extends React.Component {
   constructor() {
@@ -29,8 +29,15 @@ export default class PlayerScreen extends React.Component {
   }
   componentDidMount() {
     ScreenOrientation.allow(ScreenOrientation.Orientation.ALL);
+    Dimensions.addEventListener("change", ({ screen }) => {
+      if (screen.height < screen.width) this._presentFullscreen();
+      else this._dismissFullscreen();
+    });
   }
   _hide;
+  _orientationDidChange = o => {
+    console.log(o);
+  };
   _toggleControls = () => {
     this.setState({ isHidden: !this.state.isHidden }, () => {
       if (this._hide) clearTimeout(this._hide);
@@ -41,7 +48,10 @@ export default class PlayerScreen extends React.Component {
   _close = () => this.props.navigation.navigate("Root");
   _togglePlaying = () => this.setState({ isPlaying: !this.state.isPlaying });
   _toggleMute = () => this.setState({ isMuted: !this.state.isMuted });
-  _toggleFullScreen = () => this._video.presentFullscreenPlayer();
+  _presentFullscreen = () =>
+    this._video && this._video.presentFullscreenPlayer();
+  _dismissFullscreen = () =>
+    this._video && this._video.dismissFullscreenPlayer();
   _toggleSpinner = spin => this.setState({ spin });
 
   componentWillUnmount() {
@@ -103,7 +113,7 @@ export default class PlayerScreen extends React.Component {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={this._toggleFullScreen}
+                  onPress={this._presentFullscreen}
                   style={styles.expand}
                 >
                   <Ionicons name="md-expand" color="#fff" size={30} />

@@ -1,7 +1,8 @@
 import React from "react";
-import { FlatList, Dimensions, Text } from "react-native";
+import { FlatList, Dimensions, View, Text, Animated } from "react-native";
 
 import ChannelCard from "./ChannelCard";
+import Spinner from "./Spinner";
 import channels from "../../assets/channels.json";
 
 export default class ChannelsList extends React.Component {
@@ -10,8 +11,13 @@ export default class ChannelsList extends React.Component {
 
     this.state = {
       dataSource: null,
+      opacity: new Animated.Value(0),
+      ipInfo: null,
     };
     this.width = Dimensions.get("window").width;
+    fetch("http://ip-api.com/json/")
+      .then(r => r.json())
+      .then(res => this.setState({ ipInfo: res }));
   }
 
   _keyExtractor = item => item.id;
@@ -35,6 +41,14 @@ export default class ChannelsList extends React.Component {
     //   .then(channels => {
     //     this.setState({ dataSource: ds.cloneWithRows(channels) });
     //   });
+    Animated.timing(
+      // Animate value over time
+      this.state.opacity, // The value to drive
+      {
+        toValue: 1,
+        duration: 1000, // Animate to final value of 1
+      },
+    ).start();
     this._refreshItems();
   }
   componentDidUpdate() {
@@ -55,26 +69,57 @@ export default class ChannelsList extends React.Component {
   render() {
     const numColumns = Math.floor(this.width / 74);
     return (
-      <FlatList
-        data={this.state.dataSource}
-        keyExtractor={this._keyExtractor}
-        renderItem={this._renderItem}
-        numColumns={numColumns}
-        refreshing={this.state.dataSource ? false : true}
-        onRefresh={this._refreshItems}
-        contentContainerStyle={{ backgroundColor: "rgb(34, 34, 34)" }}
-        ListHeaderComponent={
-          <Text
-            style={{
-              color: "#ddd",
-              margin: 10,
-              fontSize: 15,
-            }}
-          >
-            {this.props.title || ""}
-          </Text>
-        }
-      />
-    );
+      /* this.state.ipInfo && this.state.ipInfo.org == "Halasat" ? ( */ <Animated.View
+        style={{ opacity: this.state.opacity }}
+      >
+        <FlatList
+          data={this.state.dataSource}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
+          numColumns={numColumns}
+          refreshing={this.state.dataSource ? false : true}
+          onRefresh={this._refreshItems}
+          contentContainerStyle={{
+            backgroundColor: "rgb(34, 34, 34)",
+          }}
+          ListHeaderComponent={
+            <Text
+              style={{
+                color: "#ddd",
+                margin: this.props.title ? 10 : 0,
+                fontSize: 15,
+              }}
+            >
+              {this.props.title || ""}
+            </Text>
+          }
+        />
+      </Animated.View>
+    ); /* : this.state.ipInfo ? (
+      <View
+        style={{
+          flex: 1,
+          padding: 10,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ color: "tomato", fontWeight: "700", fontSize: 40 }}>
+          Oops...
+        </Text>
+        <Text
+          style={{
+            color: "#fff",
+            fontSize: 20,
+            textAlign: "center",
+          }}
+        >
+          It seems like your Internet provider is not HalaSat or you are not
+          connected to the internet!
+        </Text>
+      </View>
+    ) : (
+      <Spinner /> 
+    ); */
   }
 }

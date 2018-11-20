@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "halasat-tv-native",
+    "name": "TV",
     "description": "Official HalaSat TV mobile version",
     "slug": "halasat-tv-native",
     "privacy": "public",
@@ -11,8 +11,8 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

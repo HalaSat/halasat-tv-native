@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Animated } from "react-native";
 import { createMaterialTopTabNavigator } from "react-navigation";
 
 import ChannelsList from "../components/ChannelsList";
@@ -96,6 +96,7 @@ export default createMaterialTopTabNavigator(
     tabBarOptions: {
       style: {
         backgroundColor: "#202020",
+        // height: 50,
       },
       activeTintColor: "tomato",
       inactiveTintColor: "#f2f2f2",
