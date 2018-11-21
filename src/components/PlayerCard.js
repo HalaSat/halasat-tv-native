@@ -12,8 +12,10 @@ export default props => {
   const excerpt = about.slice(0, 98).trim() + "...";
   return (
     <TouchableNativeFeedback
-      onPress={() => console.log("hello")}
-      background={TouchableNativeFeedback.Ripple("tomato", false)}
+      onPress={() =>
+        props.navigation.navigate("PlayerInfo", { item: props.item })
+      }
+      background={TouchableNativeFeedback.Ripple("tomato", true)}
       useForeground
     >
       <View style={styles.container}>

@@ -7,7 +7,11 @@ import TV from "./TV";
 import Players from "./Players";
 
 const TabBarButtonComponent = props => (
-  <TouchableNativeFeedback onPress={props.onPress} useForeground>
+  <TouchableNativeFeedback
+    onPress={props.onPress}
+    useForeground
+    background={TouchableNativeFeedback.Ripple("tomato", true)}
+  >
     <View {...props} />
   </TouchableNativeFeedback>
 );

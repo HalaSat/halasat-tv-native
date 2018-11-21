@@ -7,8 +7,9 @@ import PlayerCard from "../components/PlayerCard";
 // TODO:
 export default class PlayersScreen extends React.Component {
   _keyExtractor = item => item.id.toString();
-  _renderItem = ({ item }) => <PlayerCard item={item} />;
-
+  _renderItem = ({ item }) => (
+    <PlayerCard item={item} navigation={this.props.navigation} />
+  );
   render() {
     return (
       <FlatList

@@ -5,6 +5,7 @@ import { createStackNavigator } from "react-navigation";
 import Root from "./src/screens/Root";
 
 import PlayerScreen from "./src/screens/Player";
+import PlayerInfoScreen from "./src/screens/PlayerInfo";
 
 const LogoTitle = () => (
   <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -39,5 +40,8 @@ export default createStackNavigator({
     navigationOptions: {
       header: null,
     },
+  },
+  PlayerInfo: {
+    screen: PlayerInfoScreen,
   },
 });
