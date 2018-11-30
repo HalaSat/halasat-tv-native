@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
     height: 50,
     marginRight: 15,
     borderRadius: 25,
+    borderColor: "tomato",
+    borderWidth: 1,
   },
   info: {
     flex: 1,

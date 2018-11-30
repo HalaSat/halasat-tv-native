@@ -177,7 +177,7 @@
     "vorder": "17",
     "enable": "1",
     "cat": "Entertainment",
-    "color": "#febd2322",
+    "color": "#fff",
     "app": "live",
     "epg": "27"
   },
@@ -216,7 +216,7 @@
     "vorder": "20",
     "enable": "1",
     "cat": "Entertainment",
-    "color": "#febd2333",
+    "color": "#fff",
     "app": "live",
     "epg": "0"
   },

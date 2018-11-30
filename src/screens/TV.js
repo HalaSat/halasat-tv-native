@@ -101,6 +101,9 @@ export default createMaterialTopTabNavigator(
       activeTintColor: "tomato",
       inactiveTintColor: "#f2f2f2",
       scrollEnabled: true,
+      indicatorStyle: {
+        backgroundColor: "tomato",
+      },
     },
   },
 );

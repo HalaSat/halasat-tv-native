@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     margin: 10,
+    borderColor: "tomato",
+    borderWidth: 2,
   },
   name: {
     color: "#fff",
